@@ -1,9 +1,70 @@
 import { useState } from 'react';
-import { ChevronDown, ExternalLink, Trash2, Plus } from 'lucide-react';
+import { ChevronDown, Plus, X, Info } from 'lucide-react';
 import { mockUser, countryOptions } from '../data/mockData';
 
 type SubTab = 'about' | 'heart' | 'gifts' | 'network';
 
+/* ── Social icon SVGs ────────────────────────────────────────────────────── */
+function LinkedInIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect width="20" height="20" rx="3" fill="#0A66C2"/>
+      <rect x="5" y="8" width="2" height="6" fill="white"/>
+      <circle cx="6" cy="6.5" r="1.2" fill="white"/>
+      <path d="M9 8h2v1c.4-.7 1.1-1 2-1 1.7 0 2.5 1 2.5 2.8V14h-2v-3c0-.8-.3-1.3-1-1.3-.8 0-1.5.5-1.5 1.3V14H9V8Z" fill="white"/>
+    </svg>
+  );
+}
+
+function TwitterIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect width="20" height="20" rx="3" fill="#000"/>
+      <path d="M11.4 9.1 14.8 5h-1.3l-2.9 3.1-2.3-3.1H5l3.5 5.1L5 15h1.3l3.2-3.4 2.5 3.4H15l-3.6-5.9Z" fill="white"/>
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <rect width="20" height="20" rx="3" fill="#1877F2"/>
+      <path d="M11.5 10.5H13l.5-2h-2V7.5C11.5 7 11.8 6.5 12.5 6.5H13.5V4.5C13 4.5 12.3 4.5 11.5 4.5 9.8 4.5 8.5 5.7 8.5 7.5v1H6.5v2H8.5v5h3v-5Z" fill="white"/>
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <defs>
+        <linearGradient id="ig-grad" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stopColor="#f09433"/>
+          <stop offset="50%" stopColor="#dc2743"/>
+          <stop offset="100%" stopColor="#bc1888"/>
+        </linearGradient>
+      </defs>
+      <rect width="20" height="20" rx="4" fill="url(#ig-grad)"/>
+      <rect x="5" y="5" width="10" height="10" rx="2.5" stroke="white" strokeWidth="1.4" fill="none"/>
+      <circle cx="10" cy="10" r="2.5" stroke="white" strokeWidth="1.4" fill="none"/>
+      <circle cx="14" cy="6" r="0.8" fill="white"/>
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="7" stroke="#5b6271" strokeWidth="1.3"/>
+      <ellipse cx="9" cy="9" rx="3.5" ry="7" stroke="#5b6271" strokeWidth="1.3"/>
+      <line x1="2" y1="9" x2="16" y2="9" stroke="#5b6271" strokeWidth="1.3"/>
+      <line x1="3" y1="5.5" x2="15" y2="5.5" stroke="#5b6271" strokeWidth="0.9"/>
+      <line x1="3" y1="12.5" x2="15" y2="12.5" stroke="#5b6271" strokeWidth="0.9"/>
+    </svg>
+  );
+}
+
+/* ── Data ──────────────────────────────────────────────────────────────────── */
 const causeOptions = [
   'Agriculture', 'Arts & Media', 'Business as Mission', 'Children at Risk',
   'Church Planting', 'Community Development', 'Cross-cultural', 'Discipleship',
@@ -21,43 +82,49 @@ const allRegions = [
   'Southern Africa', 'Middle East', 'Oceania', 'Global (All Regions)',
 ];
 
-const specialRegions = ['Creative Access'];
+const expertiseOptions = [
+  'Accounting and Finance', 'Business Management', 'Common Conversations',
+  'Cross-cultural Ministry', 'Data and Analytics', 'Design', 'Education',
+  'Healthcare', 'Human Resources', 'IT and Networking',
+  'Marketing and Communications', 'Switchboard Expertise',
+  'Website Creation and Maintenance',
+];
 
+const unsupportedOptions = [
+  'Agriculture and Food Production', 'Artificial Intelligence',
+  'Building Design and Construction', 'Legal',
+];
+
+const mockBio = "For over two decades, I've been involved in global missions, focusing on leadership development and strategic planning for sustainable community transformation in the developing world.";
+
+/* ── Main component ─────────────────────────────────────────────────────── */
 export default function HelperProfileForm() {
-  const [subTab, setSubTab] = useState<SubTab>('heart');
+  const [subTab, setSubTab] = useState<SubTab>('about');
+
   const [profile, setProfile] = useState({
     displayName: mockUser.displayName,
     email: mockUser.email,
+    bio: mockBio,
     country: mockUser.country,
     zipCode: mockUser.zipCode,
     city: mockUser.city,
     state: mockUser.state,
+    locationAnonymous: false,
     bookingLink: mockUser.bookingLink,
-    socialLinks: { ...mockUser.socialLinks },
-    isPublic: true,
-    showEmail: false,
+    linkedin: mockUser.socialLinks.linkedin,
+    twitter: '',
+    facebook: '',
+    instagram: '',
+    website: '',
   });
+
   const [causes, setCauses] = useState(['Agriculture', 'Cross-cultural']);
   const [selectedRegions, setSelectedRegions] = useState(['North America', 'Central America']);
-  const [selectedSpecial, setSelectedSpecial] = useState<string[]>(['Creative Access']);
-
-  const update = (field: string, value: string | boolean) => {
-    setProfile(prev => ({ ...prev, [field]: value }));
-  };
-  const updateSocial = (platform: string, value: string) => {
-    setProfile(prev => ({ ...prev, socialLinks: { ...prev.socialLinks, [platform]: value } }));
-  };
-  const addCause = () => setCauses(prev => [...prev, causeOptions[0]]);
-  const updateCause = (i: number, val: string) =>
-    setCauses(prev => prev.map((c, idx) => (idx === i ? val : c)));
-  const toggleRegion = (r: string) =>
-    setSelectedRegions(prev =>
-      prev.includes(r) ? prev.filter(x => x !== r) : [...prev, r]
-    );
-  const toggleSpecial = (r: string) =>
-    setSelectedSpecial(prev =>
-      prev.includes(r) ? prev.filter(x => x !== r) : [...prev, r]
-    );
+  const [creativeAccess, setCreativeAccess] = useState(false);
+  const [selectedExpertise, setSelectedExpertise] = useState([
+    'Accounting and Finance', 'Business Management',
+  ]);
+  const [church, setChurch] = useState('Austin Ridge Church');
 
   const subTabs: { key: SubTab; label: string }[] = [
     { key: 'about', label: 'About You' },
@@ -85,105 +152,303 @@ export default function HelperProfileForm() {
         ))}
       </div>
 
-      {/* Tab content */}
       {subTab === 'about' && (
-        <AboutYouTab profile={profile} update={update} updateSocial={updateSocial} />
+        <AboutYouTab
+          profile={profile}
+          setProfile={setProfile}
+        />
       )}
       {subTab === 'heart' && (
         <YourHeartTab
           causes={causes}
-          addCause={addCause}
-          updateCause={updateCause}
+          setCauses={setCauses}
           selectedRegions={selectedRegions}
-          toggleRegion={toggleRegion}
-          selectedSpecial={selectedSpecial}
-          toggleSpecial={toggleSpecial}
+          setSelectedRegions={setSelectedRegions}
+          creativeAccess={creativeAccess}
+          setCreativeAccess={setCreativeAccess}
         />
       )}
-      {subTab === 'gifts' && <YourGiftsTab />}
-      {subTab === 'network' && <YourNetworkTab />}
+      {subTab === 'gifts' && (
+        <YourGiftsTab
+          selectedExpertise={selectedExpertise}
+          setSelectedExpertise={setSelectedExpertise}
+        />
+      )}
+      {subTab === 'network' && (
+        <YourNetworkTab church={church} setChurch={setChurch} />
+      )}
     </div>
   );
 }
 
 /* ── About You ─────────────────────────────────────────────────────────── */
+type ProfileState = {
+  displayName: string; email: string; bio: string;
+  country: string; zipCode: string; city: string; state: string;
+  locationAnonymous: boolean; bookingLink: string;
+  linkedin: string; twitter: string; facebook: string; instagram: string; website: string;
+};
+
 function AboutYouTab({
   profile,
-  update,
-  updateSocial,
+  setProfile,
 }: {
-  profile: useAboutState;
-  update: (f: string, v: string | boolean) => void;
-  updateSocial: (p: string, v: string) => void;
+  profile: ProfileState;
+  setProfile: React.Dispatch<React.SetStateAction<ProfileState>>;
 }) {
+  const set = (field: keyof ProfileState, value: string | boolean) =>
+    setProfile(prev => ({ ...prev, [field]: value }));
+
+  const bioLength = profile.bio.length;
+
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8">
-        <div className="flex items-center gap-4">
-          <img src={mockUser.avatar} alt="Profile" className="w-16 h-16 rounded-full object-cover" />
-          <div>
-            <p className="text-[18px] font-semibold text-[#181b1f]">{profile.displayName}</p>
-            <p className="text-[14px] text-[#5b6271]">{profile.email}</p>
-          </div>
-        </div>
-        <InputField label="Display Name *" value={profile.displayName} onChange={v => update('displayName', v)} />
-        <InputField label="Email Address" value={profile.email} onChange={v => update('email', v)} type="email" />
+      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+
+        {/* Profile Picture */}
         <div className="flex flex-col gap-4">
-          <p className="text-[14px] font-medium text-[#181b1f] opacity-70">Location</p>
-          <div className="flex gap-4">
-            <SelectField label="Country" value={profile.country} options={countryOptions} onChange={v => update('country', v)} />
-            <InputField label="Zip Code" value={profile.zipCode} onChange={v => update('zipCode', v)} />
+          <p className="text-[14px] font-medium text-[#181b1f] opacity-70">Profile Picture</p>
+          <div className="flex items-center gap-6">
+            <img
+              src={mockUser.avatar}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover shrink-0"
+            />
+            <button className="h-10 px-4 border border-[#b1b7c5] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 transition-colors">
+              Change Picture
+            </button>
           </div>
-          <div className="flex gap-4">
-            <InputField label="City" value={profile.city} onChange={v => update('city', v)} />
-            <InputField label="State" value={profile.state} onChange={v => update('state', v)} />
+          <p className="text-[12px] text-[#181b1f] opacity-70 leading-[18px]">
+            * We strongly recommend using a unique profile photo for each profile to help distinguish them more easily.
+          </p>
+        </div>
+
+        {/* Display Name */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <div className="flex items-center justify-between">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Display Name *</label>
+            <Info size={12} className="text-[#5b6271] opacity-40" />
+          </div>
+          <input
+            type="text"
+            value={profile.displayName}
+            onChange={e => set('displayName', e.target.value)}
+            className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white w-full"
+          />
+        </div>
+
+        {/* Email Address (disabled) */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Email Address</label>
+          <div className="h-10 px-4 border border-[#e1e1e6] rounded-lg bg-[#f8f8fa] flex items-center">
+            <span className="text-[14px] text-[#181b1f] opacity-60 leading-[22px]">{profile.email}</span>
           </div>
         </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Booking Link</label>
-          <div className="flex items-center gap-2 h-10 px-4 border border-[#e1e1e6] rounded-lg bg-white">
-            <ExternalLink size={16} className="text-[#5b6271] opacity-60 shrink-0" />
-            <input type="url" value={profile.bookingLink} onChange={e => update('bookingLink', e.target.value)}
-              className="flex-1 text-[14px] text-[#3e434d] outline-none bg-transparent" />
+
+        {/* Profile Bio */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <div className="flex items-center gap-2">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Profile Bio</label>
+          </div>
+          <textarea
+            value={profile.bio}
+            onChange={e => set('bio', e.target.value)}
+            maxLength={500}
+            rows={5}
+            className="px-4 py-3 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white w-full resize-none leading-[22px]"
+          />
+          <p className="text-[12px] text-[#5b6271] leading-[18px]">
+            {bioLength} / 500 characters, Min 100 characters
+          </p>
+        </div>
+
+        {/* Country */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Country</label>
+          <div className="relative">
+            <select
+              value={profile.country}
+              onChange={e => set('country', e.target.value)}
+              className="w-full h-10 pl-4 pr-10 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] bg-white appearance-none cursor-pointer"
+            >
+              {countryOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+            </select>
+            <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181b1f] opacity-65 pointer-events-none" />
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+
+        {/* Zip / City / State */}
+        <div className="flex gap-4 w-full">
+          <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Zip Code</label>
+            <input
+              type="text"
+              value={profile.zipCode}
+              onChange={e => set('zipCode', e.target.value)}
+              className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">City</label>
+            <input
+              type="text"
+              value={profile.city}
+              onChange={e => set('city', e.target.value)}
+              className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">State</label>
+            <input
+              type="text"
+              value={profile.state}
+              onChange={e => set('state', e.target.value)}
+              className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white"
+            />
+          </div>
+        </div>
+
+        {/* Anonymous checkbox */}
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={profile.locationAnonymous}
+            onChange={e => set('locationAnonymous', e.target.checked)}
+            className="w-5 h-5 border border-[#b1b7c5] rounded-md cursor-pointer accent-[#3e73d5]"
+          />
+          <span className="text-[14px] text-[#181b1f] leading-[22px]">Mark location as anonymous</span>
+        </label>
+
+        {/* Booking Link */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <div className="flex items-center justify-between">
+            <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Booking Link</label>
+            <Info size={12} className="text-[#5b6271] opacity-40" />
+          </div>
+          <input
+            type="url"
+            value={profile.bookingLink}
+            onChange={e => set('bookingLink', e.target.value)}
+            placeholder="e.g., calendly.com"
+            className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white placeholder:text-[#5b6271] placeholder:opacity-60 w-full"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-[#e1e1e6]" />
+
+        {/* Social Links */}
+        <div className="flex flex-col gap-4 w-full">
           <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Social Links</label>
-          <SocialLinkInput label="f" color="#1877F2" value={profile.socialLinks.facebook} onChange={v => updateSocial('facebook', v)} placeholder="Facebook URL" />
-          <SocialLinkInput label="in" color="#0A66C2" value={profile.socialLinks.linkedin} onChange={v => updateSocial('linkedin', v)} placeholder="LinkedIn URL" />
-          <SocialLinkInput label="𝕏" color="#000" value={profile.socialLinks.twitter} onChange={v => updateSocial('twitter', v)} placeholder="Twitter/X URL" />
-        </div>
-        <div className="flex flex-col gap-3">
-          <p className="text-[14px] font-medium text-[#181b1f] opacity-70">Profile Visibility</p>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <label className="toggle-switch"><input type="checkbox" checked={profile.isPublic} onChange={e => update('isPublic', e.target.checked)} /><span className="toggle-slider" /></label>
-            <span className="text-[14px] text-[#324054]">Make my helper profile visible to others</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <label className="toggle-switch"><input type="checkbox" checked={profile.showEmail} onChange={e => update('showEmail', e.target.checked)} /><span className="toggle-slider" /></label>
-            <span className="text-[14px] text-[#324054]">Show email address on public profile</span>
-          </label>
+
+          {/* LinkedIn (filled) */}
+          <div className="flex items-center gap-4 h-11 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="shrink-0"><LinkedInIcon /></span>
+            <input
+              type="url"
+              value={profile.linkedin}
+              onChange={e => set('linkedin', e.target.value)}
+              className="flex-1 text-[14px] text-[#181b1f] outline-none bg-transparent leading-[22px]"
+            />
+          </div>
+
+          {/* Twitter */}
+          <div className="flex items-center gap-4 h-11 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="shrink-0"><TwitterIcon /></span>
+            <input
+              type="url"
+              value={profile.twitter}
+              onChange={e => set('twitter', e.target.value)}
+              placeholder="Add Twitter handle"
+              className="flex-1 text-[14px] text-[#181b1f] outline-none bg-transparent leading-[22px] placeholder:text-[#181b1f] placeholder:opacity-50"
+            />
+          </div>
+
+          {/* Facebook */}
+          <div className="flex items-center gap-4 h-11 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="shrink-0"><FacebookIcon /></span>
+            <input
+              type="url"
+              value={profile.facebook}
+              onChange={e => set('facebook', e.target.value)}
+              placeholder="Add Facebook url"
+              className="flex-1 text-[14px] text-[#181b1f] outline-none bg-transparent leading-[22px] placeholder:text-[#181b1f] placeholder:opacity-50"
+            />
+          </div>
+
+          {/* Instagram */}
+          <div className="flex items-center gap-4 h-11 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="shrink-0"><InstagramIcon /></span>
+            <input
+              type="url"
+              value={profile.instagram}
+              onChange={e => set('instagram', e.target.value)}
+              placeholder="Add Instagram handle"
+              className="flex-1 text-[14px] text-[#181b1f] outline-none bg-transparent leading-[22px] placeholder:text-[#181b1f] placeholder:opacity-50"
+            />
+          </div>
+
+          {/* Website */}
+          <div className="flex items-center gap-4 h-11 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="shrink-0"><GlobeIcon /></span>
+            <input
+              type="url"
+              value={profile.website}
+              onChange={e => set('website', e.target.value)}
+              placeholder="Add personal website url"
+              className="flex-1 text-[14px] text-[#181b1f] outline-none bg-transparent leading-[22px] placeholder:text-[#181b1f] placeholder:opacity-50"
+            />
+          </div>
         </div>
       </div>
-      <DataSection />
+
+      {/* Bottom cards */}
+      <div className="flex gap-4 w-full">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Request for Your Data</p>
+            <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
+              Request a copy of the personal data associated with your account.
+            </p>
+          </div>
+          <button className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 transition-colors self-start">
+            Request for Your Data
+          </button>
+        </div>
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Request to Delete Profile</p>
+            <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
+              Submit a request to permanently delete this <span className="font-medium">Believer Profile</span> and associated account data.
+            </p>
+          </div>
+          <button className="h-10 px-4 bg-[#b42218] rounded-lg text-[14px] font-medium text-white hover:bg-[#9a1d14] transition-colors self-start">
+            Request Profile Deletion
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
 
 /* ── Your Heart ─────────────────────────────────────────────────────────── */
 function YourHeartTab({
-  causes, addCause, updateCause,
-  selectedRegions, toggleRegion,
-  selectedSpecial, toggleSpecial,
+  causes, setCauses,
+  selectedRegions, setSelectedRegions,
+  creativeAccess, setCreativeAccess,
 }: {
   causes: string[];
-  addCause: () => void;
-  updateCause: (i: number, v: string) => void;
+  setCauses: React.Dispatch<React.SetStateAction<string[]>>;
   selectedRegions: string[];
-  toggleRegion: (r: string) => void;
-  selectedSpecial: string[];
-  toggleSpecial: (r: string) => void;
+  setSelectedRegions: React.Dispatch<React.SetStateAction<string[]>>;
+  creativeAccess: boolean;
+  setCreativeAccess: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const toggleRegion = (r: string) =>
+    setSelectedRegions(prev =>
+      prev.includes(r) ? prev.filter(x => x !== r) : [...prev, r]
+    );
+
   return (
     <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
       {/* Ministry Causes */}
@@ -198,12 +463,10 @@ function YourHeartTab({
               <div className="relative">
                 <select
                   value={cause}
-                  onChange={e => updateCause(i, e.target.value)}
+                  onChange={e => setCauses(prev => prev.map((c, idx) => idx === i ? e.target.value : c))}
                   className="w-full h-10 pl-4 pr-10 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] bg-white appearance-none cursor-pointer"
                 >
-                  {causeOptions.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
-                  ))}
+                  {causeOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
                 <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181b1f] opacity-65 pointer-events-none" />
               </div>
@@ -211,7 +474,7 @@ function YourHeartTab({
           ))}
           <div className="flex justify-end">
             <button
-              onClick={addCause}
+              onClick={() => setCauses(prev => [...prev, causeOptions[0]])}
               className="flex items-center gap-1 text-[#3e73d5] text-[14px] font-medium hover:opacity-80 transition-opacity"
             >
               <Plus size={14} />
@@ -225,20 +488,20 @@ function YourHeartTab({
       <div className="w-full h-px bg-[#e1e1e6]" />
 
       {/* Regions */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-8">
         <p className="text-[14px] font-medium text-[#181b1f] opacity-70">
           Select regions you're passionate about
         </p>
 
-        {/* Region tag grid */}
-        <div className="flex flex-wrap gap-2 p-4 border border-[#e1e1e6] rounded-lg bg-white">
+        {/* Regions tag box */}
+        <div className="bg-white px-4 py-2.5 rounded-lg flex flex-wrap gap-2">
           {allRegions.map(region => {
             const active = selectedRegions.includes(region);
             return (
               <button
                 key={region}
                 onClick={() => toggleRegion(region)}
-                className={`px-2 py-0.5 rounded-full text-[12px] leading-[18px] transition-colors ${
+                className={`px-2 py-[3px] rounded-full text-[12px] leading-[18px] transition-colors ${
                   active
                     ? 'bg-[#3e73d5] text-white'
                     : 'bg-[#f0f6ff] text-[#181b1f] hover:bg-[#ddeafc]'
@@ -250,24 +513,18 @@ function YourHeartTab({
           })}
         </div>
 
-        {/* Special access tags */}
-        <div className="flex flex-wrap gap-2 p-4 border border-[#e1e1e6] rounded-lg bg-white">
-          {specialRegions.map(region => {
-            const active = selectedSpecial.includes(region);
-            return (
-              <button
-                key={region}
-                onClick={() => toggleSpecial(region)}
-                className={`px-2 py-0.5 rounded-full text-[12px] leading-[18px] transition-colors ${
-                  active
-                    ? 'bg-[#3e73d5] text-white'
-                    : 'bg-[#f0f6ff] text-[#181b1f] hover:bg-[#ddeafc]'
-                }`}
-              >
-                {region}
-              </button>
-            );
-          })}
+        {/* Creative Access box */}
+        <div className="bg-white px-4 py-2.5 rounded-lg flex flex-wrap gap-2">
+          <button
+            onClick={() => setCreativeAccess(prev => !prev)}
+            className={`px-2 py-[3px] rounded-full text-[12px] leading-[18px] transition-colors ${
+              creativeAccess
+                ? 'bg-[#3e73d5] text-white'
+                : 'bg-[#f0f6ff] text-[#181b1f] hover:bg-[#ddeafc]'
+            }`}
+          >
+            Creative Access
+          </button>
         </div>
       </div>
     </div>
@@ -275,153 +532,122 @@ function YourHeartTab({
 }
 
 /* ── Your Gifts ─────────────────────────────────────────────────────────── */
-const giftOptions = [
-  'Teaching', 'Evangelism', 'Discipleship', 'Intercession', 'Prophecy',
-  'Administration', 'Helps / Service', 'Hospitality', 'Giving', 'Leadership',
-  'Mercy', 'Exhortation', 'Knowledge', 'Wisdom', 'Faith', 'Healing',
-];
-
-function YourGiftsTab() {
-  const [selected, setSelected] = useState(['Teaching', 'Evangelism', 'Discipleship']);
-  const toggle = (g: string) =>
-    setSelected(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g]);
-
-  return (
-    <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-6 w-full">
-      <p className="text-[14px] font-medium text-[#181b1f] opacity-70">
-        Select your spiritual gifts and ministry strengths
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {giftOptions.map(gift => (
-          <button
-            key={gift}
-            onClick={() => toggle(gift)}
-            className={`px-3 py-1.5 rounded-lg text-[14px] font-medium transition-colors border ${
-              selected.includes(gift)
-                ? 'bg-[#3e73d5] text-white border-[#3e73d5]'
-                : 'bg-white text-[#5b6271] border-[#e1e1e6] hover:border-[#3e73d5] hover:text-[#3e73d5]'
-            }`}
-          >
-            {gift}
-          </button>
-        ))}
-      </div>
-      {selected.length > 0 && (
-        <div>
-          <p className="text-[12px] text-[#5b6271] mb-2">Selected ({selected.length})</p>
-          <div className="flex flex-wrap gap-2">
-            {selected.map(g => (
-              <span key={g} className="px-2 py-0.5 bg-[#f0f6ff] text-[#3e73d5] text-[12px] font-medium rounded-full">
-                {g}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ── Your Network ────────────────────────────────────────────────────────── */
-function YourNetworkTab() {
-  const [org, setOrg] = useState('Tentmakers Network');
-  const [role, setRole] = useState('Church Planter');
-  const [years, setYears] = useState('5');
+function YourGiftsTab({
+  selectedExpertise,
+  setSelectedExpertise,
+}: {
+  selectedExpertise: string[];
+  setSelectedExpertise: React.Dispatch<React.SetStateAction<string[]>>;
+}) {
+  const toggle = (tag: string) =>
+    setSelectedExpertise(prev =>
+      prev.includes(tag) ? prev.filter(x => x !== tag) : [...prev, tag]
+    );
 
   return (
     <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
       <p className="text-[14px] font-medium text-[#181b1f] opacity-70">
-        Tell us about your ministry network and affiliation
+        Select your expertise and how you can serve
       </p>
-      <InputField label="Organization / Sending Church" value={org} onChange={setOrg} />
-      <div className="flex gap-4">
-        <InputField label="Your Role" value={role} onChange={setRole} />
-        <InputField label="Years in Ministry" value={years} onChange={setYears} type="number" />
+
+      {/* Expertise tags */}
+      <div className="bg-white px-4 py-2.5 rounded-lg flex flex-wrap gap-2">
+        {expertiseOptions.map(tag => {
+          const active = selectedExpertise.includes(tag);
+          return (
+            <button
+              key={tag}
+              onClick={() => toggle(tag)}
+              className={`px-2 py-[3px] rounded-full text-[12px] leading-[18px] transition-colors ${
+                active
+                  ? 'bg-[#3e73d5] text-white'
+                  : 'bg-[#f0f6ff] text-[#181b1f] hover:bg-[#ddeafc]'
+              }`}
+            >
+              {tag}
+            </button>
+          );
+        })}
       </div>
+
+      {/* Unsupported (starred) tags */}
+      <div className="bg-white px-4 py-2.5 rounded-lg flex flex-wrap gap-2">
+        {unsupportedOptions.map(tag => (
+          <span
+            key={tag}
+            className="px-2 py-[3px] rounded-full text-[12px] leading-[18px] bg-[#f0f6ff] text-[#181b1f]"
+          >
+            {tag} *
+          </span>
+        ))}
+      </div>
+
+      {/* Footnote */}
+      <p className="text-[12px] text-[#181b1f] opacity-70 leading-[18px]">
+        * We don't currently support requests within that area of expertise. However, by indicating this area now, you help us to prioritize that domain area and we ensure that you will be informed when that category goes live.
+      </p>
     </div>
   );
 }
 
-/* ── Data / Delete Section ───────────────────────────────────────────────── */
-function DataSection() {
+/* ── Your Network ─────────────────────────────────────────────────────────── */
+function YourNetworkTab({
+  church,
+  setChurch,
+}: {
+  church: string;
+  setChurch: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
-    <>
-      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8">
-        <div className="flex items-start justify-between gap-8">
+    <div className="flex flex-col gap-6 w-full">
+      {/* Main card */}
+      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+        <p className="text-[14px] font-medium text-[#181b1f] opacity-70">
+          Select your church affiliation
+        </p>
+
+        {/* Church field */}
+        <div className="flex flex-col gap-1.5 w-full">
+          <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Church</label>
+          <div className="flex items-center gap-2 h-10 px-4 border border-[#e1e1e6] rounded-lg bg-white">
+            <span className="flex-1 text-[14px] text-[#181b1f] leading-[22px]">{church}</span>
+            {church && (
+              <button
+                onClick={() => setChurch('')}
+                className="text-[#181b1f] opacity-65 hover:opacity-100 transition-opacity shrink-0"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Info cards */}
+      <div className="flex gap-4 w-full">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <p className="text-[18px] font-semibold text-[#181b1f]">Request for Your Data</p>
-            <p className="text-[14px] text-[#5b6271] leading-[22px] max-w-lg">
-              You can request a copy of all personal data we hold about you. We will send it to your registered email within 30 days.
+            <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Prayer Circles You've Joined</p>
+            <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
+              Request a copy of the personal data associated with your account.
             </p>
           </div>
-          <button className="h-10 px-4 border border-[#b1b7c5] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 whitespace-nowrap shrink-0">
-            Request Data
+          <button className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 transition-colors self-start">
+            Go to Joined Circles
+          </button>
+        </div>
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Your Contacts</p>
+            <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
+              List of Kingdom Relationships and connections you've built on Switchboard.
+            </p>
+          </div>
+          <button className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 transition-colors self-start">
+            See My Contacts
           </button>
         </div>
       </div>
-      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8">
-        <div className="flex items-start justify-between gap-8">
-          <div className="flex flex-col gap-2">
-            <p className="text-[18px] font-semibold text-[#181b1f]">Request to Delete Profile</p>
-            <p className="text-[14px] text-[#5b6271] leading-[22px] max-w-lg">
-              Submitting this request will permanently delete your Helper Profile and all associated data. This action cannot be undone.
-            </p>
-          </div>
-          <button className="flex items-center gap-2 h-10 px-4 border border-red-200 rounded-lg text-[14px] font-medium text-red-600 hover:bg-red-50 whitespace-nowrap shrink-0">
-            <Trash2 size={16} />
-            Delete Profile
-          </button>
-        </div>
-      </div>
-    </>
-  );
-}
-
-/* ── Shared field components ─────────────────────────────────────────────── */
-function InputField({ label, value, onChange, type = 'text' }: {
-  label: string; value: string; onChange: (v: string) => void; type?: string;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-      <label className="text-[14px] font-medium text-[#181b1f] opacity-70">{label}</label>
-      <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="h-10 px-4 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] transition-colors bg-white" />
     </div>
   );
 }
-
-function SelectField({ label, value, options, onChange }: {
-  label: string; value: string; options: string[]; onChange: (v: string) => void;
-}) {
-  return (
-    <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-      <label className="text-[14px] font-medium text-[#181b1f] opacity-70">{label}</label>
-      <div className="relative">
-        <select value={value} onChange={e => onChange(e.target.value)}
-          className="w-full h-10 pl-4 pr-10 border border-[#e1e1e6] rounded-lg text-[14px] text-[#181b1f] outline-none focus:border-[#3e73d5] bg-white appearance-none cursor-pointer">
-          {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-        </select>
-        <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181b1f] opacity-65 pointer-events-none" />
-      </div>
-    </div>
-  );
-}
-
-function SocialLinkInput({ label, color, value, onChange, placeholder }: {
-  label: string; color: string; value: string; onChange: (v: string) => void; placeholder: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 h-10 px-4 border border-[#e1e1e6] rounded-lg bg-white">
-      <span className="font-bold text-[14px] w-5 text-center shrink-0" style={{ color }}>{label}</span>
-      <input type="url" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="flex-1 text-[14px] text-[#3e434d] outline-none bg-transparent placeholder:text-[#b1b7c5]" />
-    </div>
-  );
-}
-
-type useAboutState = {
-  displayName: string; email: string; country: string; zipCode: string;
-  city: string; state: string; bookingLink: string;
-  socialLinks: { facebook: string; linkedin: string; twitter: string };
-  isPublic: boolean; showEmail: boolean;
-};

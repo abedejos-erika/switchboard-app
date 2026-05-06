@@ -338,15 +338,6 @@ function YourNetworkTab() {
         <InputField label="Your Role" value={role} onChange={setRole} />
         <InputField label="Years in Ministry" value={years} onChange={setYears} type="number" />
       </div>
-      <div className="flex flex-col gap-3 p-4 bg-[#f0f6ff] rounded-lg">
-        <p className="text-[14px] font-medium text-[#181b1f]">Looking to connect with</p>
-        {['Local churches', 'Mission organizations', 'Individual volunteers', 'Prayer partners'].map(opt => (
-          <label key={opt} className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#3e73d5]" />
-            <span className="text-[14px] text-[#324054]">{opt}</span>
-          </label>
-        ))}
-      </div>
     </div>
   );
 }

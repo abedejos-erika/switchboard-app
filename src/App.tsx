@@ -11,15 +11,7 @@ type Tab = 'personal' | 'helper' | 'gospel';
 
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('personal');
-  const [hasHelperProfile, setHasHelperProfile] = useState(mockUser.hasHelperProfile);
-  const [hasGospelWorker, setHasGospelWorker] = useState(mockUser.hasGospelWorker);
   const [saved, setSaved] = useState(false);
-
-  const handleTabChange = (tab: Tab) => {
-    if (tab === 'helper' && !hasHelperProfile) setHasHelperProfile(true);
-    if (tab === 'gospel' && !hasGospelWorker) setHasGospelWorker(true);
-    setActiveTab(tab);
-  };
 
   const handleSave = () => {
     setSaved(true);
@@ -58,9 +50,7 @@ function App() {
           <div className="flex gap-[200px] items-start">
             <Sidebar
               activeTab={activeTab}
-              onTabChange={handleTabChange}
-              hasHelperProfile={hasHelperProfile}
-              hasGospelWorker={hasGospelWorker}
+              onTabChange={setActiveTab}
             />
 
             <div className="flex-1 min-w-0">

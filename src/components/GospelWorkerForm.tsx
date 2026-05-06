@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, Plus, X } from 'lucide-react';
-import { gospelWorkerMockData } from '../data/mockData';
+import { gospelWorkerMockData, mockUser } from '../data/mockData';
 
 const denominationOptions = ['Non-denominational', 'Baptist', 'Presbyterian', 'Methodist', 'Pentecostal', 'Catholic', 'Anglican', 'Lutheran'];
 const roleOptions = ['Church Planter', 'Evangelist', 'Missionary', 'Discipler', 'Pastor', 'Bible Teacher', 'Relief Worker'];
@@ -25,6 +25,24 @@ export default function GospelWorkerForm() {
 
   return (
     <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+      {/* Profile Picture */}
+      <div className="flex flex-col gap-4">
+        <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Profile Picture</label>
+        <div className="flex items-center gap-6">
+          <img
+            src={mockUser.gospelAvatar}
+            alt="Profile"
+            className="w-20 h-20 rounded-full object-cover shrink-0"
+          />
+          <button className="h-10 px-4 border border-[#b1b7c5] rounded-lg text-[14px] font-medium text-[#181b1f] hover:bg-gray-50 transition-colors">
+            Change Picture
+          </button>
+        </div>
+        <p className="text-[12px] text-[#181b1f] opacity-70 leading-[18px]">
+          * We strongly recommend using a unique profile photo for each profile to help distinguish them more easily.
+        </p>
+      </div>
+
       <div className="flex flex-col gap-2">
         <p className="text-[20px] font-semibold text-[#181b1f]">Gospel Worker Profile</p>
         <p className="text-[14px] text-[#5b6271]">Share your ministry background and areas of service.</p>

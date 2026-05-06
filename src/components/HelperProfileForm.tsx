@@ -210,7 +210,7 @@ function AboutYouTab({
           <p className="text-[14px] font-medium text-[#181b1f] opacity-70">Profile Picture</p>
           <div className="flex items-center gap-6">
             <img
-              src={mockUser.avatar}
+              src={mockUser.believerAvatar}
               alt="Profile"
               className="w-20 h-20 rounded-full object-cover shrink-0"
             />

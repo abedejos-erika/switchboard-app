@@ -12,6 +12,8 @@ export const mockUser = {
   phone: '(630) 123-9874',
   smsSubscribed: false,
   avatar: 'https://i.pravatar.cc/80?img=11',
+  believerAvatar: 'https://i.pravatar.cc/80?img=15',
+  gospelAvatar: 'https://i.pravatar.cc/80?img=57',
   displayName: 'John Smith',
   email: 'john.smith@example.com',
   country: 'Philippines',

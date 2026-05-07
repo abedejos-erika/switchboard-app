@@ -12,7 +12,7 @@ type Tab = 'personal' | 'helper' | 'gospel';
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'personal', label: 'Personal Details',      icon: <CircleUser size={16} /> },
-  { key: 'helper',   label: 'Helper Profile',         icon: <Handshake size={16} /> },
+  { key: 'helper',   label: 'Believer Profile',        icon: <Handshake size={16} /> },
   { key: 'gospel',   label: 'Gospel Worker Profile',  icon: <Landmark size={16} /> },
 ];
 

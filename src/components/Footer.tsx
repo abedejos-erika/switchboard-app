@@ -6,7 +6,7 @@ export default function Footer() {
         {/* Logo */}
         <div className="flex items-center gap-[4.676px]" style={{ width: '172px' }}>
           <img
-            src="/logo-mark-dark.svg"
+            src={`${import.meta.env.BASE_URL}logo-mark-dark.svg`}
             alt=""
             className="shrink-0"
             style={{ width: '26.05px', height: '26.384px' }}
@@ -40,7 +40,7 @@ export default function Footer() {
         {/* Logo */}
         <div className="flex items-center gap-[3.5px]">
           <img
-            src="/logo-mark-dark.svg"
+            src={`${import.meta.env.BASE_URL}logo-mark-dark.svg`}
             alt=""
             className="shrink-0"
             style={{ width: '19.538px', height: '19.788px' }}

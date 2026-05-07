@@ -10,7 +10,7 @@ export default function Navbar({ avatarUrl }: NavbarProps) {
       {/* Logo */}
       <div className="flex items-center gap-[4.676px]">
         <img
-          src="/logo-mark-white.svg"
+          src={`${import.meta.env.BASE_URL}logo-mark-white.svg`}
           alt=""
           className="shrink-0"
           style={{ width: '26.05px', height: '26.384px' }}

@@ -8,16 +8,14 @@ export default function Navbar({ avatarUrl }: NavbarProps) {
   return (
     <nav className="bg-[#081321] h-[80px] flex items-center justify-between px-16 shrink-0 w-full">
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="13" cy="13" r="12" stroke="white" strokeWidth="2" fill="none"/>
-          <circle cx="13" cy="13" r="3" fill="white"/>
-          <line x1="13" y1="1" x2="13" y2="7" stroke="white" strokeWidth="2"/>
-          <line x1="13" y1="19" x2="13" y2="25" stroke="white" strokeWidth="2"/>
-          <line x1="1" y1="13" x2="7" y2="13" stroke="white" strokeWidth="2"/>
-          <line x1="19" y1="13" x2="25" y2="13" stroke="white" strokeWidth="2"/>
-        </svg>
-        <span className="text-white font-bold text-[22px] tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+      <div className="flex items-center gap-[4.676px]">
+        <img
+          src="/logo-mark-white.svg"
+          alt=""
+          className="shrink-0"
+          style={{ width: '26.05px', height: '26.384px' }}
+        />
+        <span className="text-white whitespace-nowrap" style={{ fontFamily: "'Myanmar MN', 'Myanmar Text', serif", fontWeight: 700, fontSize: '22.711px', lineHeight: 'normal' }}>
           Switchboard
         </span>
       </div>

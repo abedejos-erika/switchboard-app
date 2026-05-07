@@ -1,4 +1,4 @@
-import { User, Handshake, Landmark } from 'lucide-react';
+import { User, Handshake, Landmark, Users, Building2 } from 'lucide-react';
 
 type Tab = 'personal' | 'helper' | 'gospel';
 
@@ -17,16 +17,39 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         onClick={() => onTabChange('personal')}
       />
       <SidebarItem
-        icon={<Handshake size={16} />}
-        label="Believer Profile"
-        active={activeTab === 'helper'}
-        onClick={() => onTabChange('helper')}
-      />
-      <SidebarItem
         icon={<Landmark size={16} />}
         label="Gospel Worker"
         active={activeTab === 'gospel'}
         onClick={() => onTabChange('gospel')}
+      />
+      {activeTab === 'gospel' && (
+        <div className="flex items-start px-6">
+          <div className="flex gap-2 items-start flex-1 min-w-0">
+            {/* Vertical indicator line */}
+            <div className="w-0.5 h-[70px] bg-[#e1e1e6] rounded-full shrink-0 mt-3" />
+            {/* Sub-items */}
+            <div className="flex flex-col flex-1 min-w-0">
+              <div className="flex items-center gap-3 h-12 px-4 rounded-lg">
+                <span className="text-[#5b6271] shrink-0">
+                  <Users size={16} />
+                </span>
+                <span className="text-[14px] font-medium text-[#181b1f]">My Prayer Circle</span>
+              </div>
+              <div className="flex items-center gap-3 h-12 px-4 rounded-lg">
+                <span className="text-[#5b6271] shrink-0">
+                  <Building2 size={16} />
+                </span>
+                <span className="text-[14px] font-medium text-[#181b1f]">Grace Local Church</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <SidebarItem
+        icon={<Handshake size={16} />}
+        label="Believer Profile"
+        active={activeTab === 'helper'}
+        onClick={() => onTabChange('helper')}
       />
     </div>
   );
@@ -61,4 +84,3 @@ function SidebarItem({
     </button>
   );
 }
-

@@ -1,4 +1,4 @@
-import { User, Handshake, Landmark, Users, Building2 } from 'lucide-react';
+import { CircleUser, Handshake, Landmark, Users } from 'lucide-react';
 
 type Tab = 'personal' | 'helper' | 'gospel';
 
@@ -11,7 +11,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
     <div className="flex flex-col gap-2 w-[275px] shrink-0">
       <SidebarItem
-        icon={<User size={16} />}
+        icon={<CircleUser size={16} />}
         label="Personal Details"
         active={activeTab === 'personal'}
         onClick={() => onTabChange('personal')}
@@ -37,7 +37,7 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               </div>
               <div className="flex items-center gap-3 h-12 px-4 rounded-lg">
                 <span className="text-[#5b6271] shrink-0">
-                  <Building2 size={16} />
+                  <AddressCardIcon />
                 </span>
                 <span className="text-[14px] font-medium text-[#181b1f]">Grace Local Church</span>
               </div>
@@ -52,6 +52,22 @@ export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         onClick={() => onTabChange('helper')}
       />
     </div>
+  );
+}
+
+/* ── FA6 Light — address-card ────────────────────────────────────────────── */
+function AddressCardIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      {/* card outline */}
+      <rect x="1.5" y="4" width="17" height="12" rx="1.5" />
+      {/* avatar circle */}
+      <circle cx="6.5" cy="10" r="2.5" />
+      {/* text lines */}
+      <line x1="11.5" y1="8"    x2="17"   y2="8"    />
+      <line x1="11.5" y1="10.5" x2="17"   y2="10.5" />
+      <line x1="11.5" y1="13"   x2="14.5" y2="13"   />
+    </svg>
   );
 }
 

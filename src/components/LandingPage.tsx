@@ -1,3 +1,5 @@
+import LogoMark from './LogoMark';
+
 interface LandingPageProps {
   onGetStarted: () => void;
 }
@@ -8,25 +10,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
 
       {/* Nav — dark plum, centered logo only */}
       <nav className="bg-[#433846] h-[80px] flex items-center justify-center shrink-0 w-full">
-        <div className="flex items-center gap-[4.676px]">
-          <img
-            src={`${import.meta.env.BASE_URL}logo-mark-white.svg`}
-            alt=""
-            className="shrink-0"
-            style={{ width: '26.05px', height: '26.384px' }}
-          />
-          <span
-            className="text-white whitespace-nowrap"
-            style={{
-              fontFamily: "'Myanmar MN', 'Myanmar Text', serif",
-              fontWeight: 700,
-              fontSize: '22.711px',
-              lineHeight: 'normal',
-            }}
-          >
-            Switchboard
-          </span>
-        </div>
+        <LogoMark color="white" height={27} />
       </nav>
 
       {/* Content */}

@@ -1,4 +1,4 @@
-import { Home, Inbox, Handshake, Share2 } from 'lucide-react';
+import { Home, Inbox, Handshake, Share2, Menu } from 'lucide-react';
 
 interface NavbarProps {
   avatarUrl: string;
@@ -6,7 +6,7 @@ interface NavbarProps {
 
 export default function Navbar({ avatarUrl }: NavbarProps) {
   return (
-    <nav className="bg-[#081321] h-[80px] flex items-center justify-between px-16 shrink-0 w-full">
+    <nav className="bg-[#081321] md:h-[80px] h-[56px] flex items-center justify-between md:px-16 px-4 shrink-0 w-full">
       {/* Logo */}
       <div className="flex items-center gap-[4.676px]">
         <img
@@ -20,8 +20,8 @@ export default function Navbar({ avatarUrl }: NavbarProps) {
         </span>
       </div>
 
-      {/* Navigation Links */}
-      <div className="flex items-center gap-8">
+      {/* Navigation Links — desktop only */}
+      <div className="hidden md:flex items-center gap-8">
         <NavItem icon={<Home size={20} />} label="Home" />
         <NavItem icon={<Inbox size={20} />} label="Inbox" />
         <NavItem icon={<Handshake size={20} />} label="Volunteer" />
@@ -29,14 +29,19 @@ export default function Navbar({ avatarUrl }: NavbarProps) {
       </div>
 
       {/* Right side */}
-      <div className="flex items-center gap-4">
-        <button className="w-10 h-10 flex items-center justify-center opacity-80 text-white hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-3">
+        {/* Share icon — desktop only */}
+        <button className="hidden md:flex w-10 h-10 items-center justify-center opacity-80 text-white hover:opacity-100 transition-opacity">
           <Share2 size={20} />
+        </button>
+        {/* Hamburger — mobile only */}
+        <button className="md:hidden w-8 h-8 flex items-center justify-center opacity-80 text-white hover:opacity-100 transition-opacity">
+          <Menu size={20} />
         </button>
         <img
           src={avatarUrl}
           alt="User avatar"
-          className="w-10 h-10 rounded-full object-cover"
+          className="md:w-10 md:h-10 w-8 h-8 rounded-full object-cover"
         />
       </div>
     </nav>

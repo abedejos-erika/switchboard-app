@@ -18,7 +18,7 @@ export default function PersonalDetailsForm() {
     setLanguages(prev => prev.map((l, idx) => idx === i ? { ...l, [field]: value } : l));
 
   return (
-    <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+    <div className="bg-white border border-[#e1e1e6] rounded-xl md:p-8 p-6 flex flex-col md:gap-8 gap-6 w-full">
 
       {/* Profile Picture */}
       <div className="flex flex-col gap-4">
@@ -36,7 +36,7 @@ export default function PersonalDetailsForm() {
       </div>
 
       {/* First Name / Last Name / Gender */}
-      <div className="flex gap-4 items-end w-full">
+      <div className="flex md:flex-row flex-col gap-4 md:items-end w-full">
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
           <label className="text-[14px] font-medium text-[#181b1f] opacity-70 whitespace-nowrap">First Name *</label>
           <input
@@ -97,7 +97,7 @@ export default function PersonalDetailsForm() {
       {/* Language / Proficiency */}
       <div className="flex flex-col gap-4 w-full">
         {languages.map((lang, idx) => (
-          <div key={idx} className="flex gap-4 items-end">
+          <div key={idx} className="flex md:flex-row flex-col gap-4 md:items-end">
             <div className="flex flex-col gap-1.5 flex-1 min-w-0">
               <label className="text-[14px] font-medium text-[#181b1f] opacity-70 whitespace-nowrap">Language *</label>
               <div className="relative">

@@ -136,7 +136,7 @@ export default function HelperProfileForm() {
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* Sub-tab navigation */}
-      <div className="border-b border-[#e1e1e6] flex gap-6">
+      <div className="border-b border-[#e1e1e6] flex gap-6 overflow-x-auto scrollbar-none">
         {subTabs.map(({ key, label }) => (
           <button
             key={key}
@@ -203,7 +203,7 @@ function AboutYouTab({
 
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+      <div className="bg-white border border-[#e1e1e6] rounded-xl md:p-8 p-6 flex flex-col md:gap-8 gap-6 w-full">
 
         {/* Profile Picture */}
         <div className="flex flex-col gap-4">
@@ -278,7 +278,7 @@ function AboutYouTab({
         </div>
 
         {/* Zip / City / State */}
-        <div className="flex gap-4 w-full">
+        <div className="flex md:flex-row flex-col gap-4 w-full">
           <div className="flex flex-col gap-1.5 flex-1 min-w-0">
             <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Zip Code</label>
             <input
@@ -403,8 +403,8 @@ function AboutYouTab({
       </div>
 
       {/* Bottom cards */}
-      <div className="flex gap-4 w-full">
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+      <div className="flex md:flex-row flex-col gap-4 w-full">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Request for Your Data</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
@@ -415,7 +415,7 @@ function AboutYouTab({
             Request for Your Data
           </button>
         </div>
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Request to Delete Profile</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
@@ -624,8 +624,8 @@ function YourNetworkTab({
       </div>
 
       {/* Info cards */}
-      <div className="flex gap-4 w-full">
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+      <div className="flex md:flex-row flex-col gap-4 w-full">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Prayer Circles You've Joined</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
@@ -636,7 +636,7 @@ function YourNetworkTab({
             Go to Joined Circles
           </button>
         </div>
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828] leading-[24px]">Your Contacts</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">

@@ -26,6 +26,14 @@ input, select {
   font-family: 'Inter', sans-serif;
 }
 
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 .toggle-switch {
   position: relative;
   display: inline-block;

@@ -69,7 +69,7 @@ export default function GospelWorkerForm() {
   return (
     <div className="flex flex-col gap-8 w-full">
       {/* Sub-tab navigation */}
-      <div className="border-b border-[#e1e1e6] flex gap-6">
+      <div className="border-b border-[#e1e1e6] flex gap-6 overflow-x-auto scrollbar-none">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -159,7 +159,7 @@ function AboutMinistryTab({
   const charCount = intro.length;
 
   return (
-    <div className="bg-white border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-8 w-full">
+    <div className="bg-white border border-[#e1e1e6] rounded-xl md:p-8 p-6 flex flex-col md:gap-8 gap-6 w-full">
 
       {/* Profile Picture */}
       <div className="flex flex-col gap-4">
@@ -237,7 +237,7 @@ function AboutMinistryTab({
       </div>
 
       {/* Zip / City / State */}
-      <div className="flex gap-4">
+      <div className="flex md:flex-row flex-col gap-4">
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
           <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Zip Code</label>
           <input
@@ -279,7 +279,7 @@ function AboutMinistryTab({
       </label>
 
       {/* Ministry Website + Booking Link */}
-      <div className="flex gap-4">
+      <div className="flex md:flex-row flex-col gap-4">
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
           <label className="text-[14px] font-medium text-[#181b1f] opacity-70">Ministry Website</label>
           <input
@@ -306,8 +306,8 @@ function AboutMinistryTab({
       </div>
 
       {/* Bottom cards */}
-      <div className="flex gap-4">
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+      <div className="flex md:flex-row flex-col gap-4">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828]">Request for Your Data</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">
@@ -318,7 +318,7 @@ function AboutMinistryTab({
             Request for Your Data
           </button>
         </div>
-        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-8 flex flex-col gap-4">
+        <div className="flex-1 border border-[#e1e1e6] rounded-xl p-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p className="text-[16px] font-semibold text-[#101828]">Request to Delete Profile</p>
             <p className="text-[14px] text-[#181b1f] opacity-70 leading-[22px]">

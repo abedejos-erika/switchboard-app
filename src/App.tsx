@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import PersonalDetailsForm from './components/PersonalDetailsForm';
 import HelperProfileForm from './components/HelperProfileForm';
 import GospelWorkerForm from './components/GospelWorkerForm';
+import LandingPage from './components/LandingPage';
 import { mockUser } from './data/mockData';
 
 type Tab = 'personal' | 'helper' | 'gospel';
@@ -17,9 +18,14 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
 ];
 
 function App() {
+  const [page, setPage] = useState<'landing' | 'edit'>('landing');
   const [activeTab, setActiveTab] = useState<Tab>('personal');
   const [saved, setSaved] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+
+  if (page === 'landing') {
+    return <LandingPage onGetStarted={() => setPage('edit')} />;
+  }
 
   const handleSave = () => {
     setSaved(true);
